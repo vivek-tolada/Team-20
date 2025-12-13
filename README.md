@@ -1,89 +1,104 @@
 # LLM-Based Intelligent Assistant for DevOps Productivity Enhancement
 
-## Overview
-This project is a **Proof of Concept (POC) / Minimum Viable Product (MVP)** that demonstrates how a **Large Language Model (LLM)** can be used as an intelligent assistant to improve **DevOps productivity**.  
-The system helps DevOps engineers understand errors, troubleshoot CI/CD issues, and follow best practices using natural language interaction.
+## Abstract
+DevOps practices play a critical role in modern software engineering by enabling continuous integration, continuous delivery, and automated deployment workflows. However, DevOps engineers frequently perform repetitive and cognitively demanding tasks such as debugging CI/CD pipelines, managing Docker and Kubernetes configurations, reviewing pull requests, and maintaining documentation.
+
+This project presents an **LLM-Based Intelligent Assistant for DevOps Productivity Enhancement**, implemented as a **Minimum Viable Product (MVP) / Proof of Concept (POC)**. The system demonstrates how Large Language Models (LLMs) can assist DevOps engineers by understanding natural language queries and providing actionable guidance to improve efficiency, reduce manual effort, and enhance developer productivity.
+
+---
+
+## Introduction
+With the increasing adoption of cloud-native architectures and microservices, DevOps workflows have become more complex and time-consuming. Tasks such as writing Dockerfiles, configuring CI/CD pipelines, troubleshooting deployment failures, and reviewing pull requests require specialized expertise and significant manual effort.
+
+Recent advancements in Large Language Models (LLMs) have shown strong capabilities in reasoning, code understanding, and natural language processing. These capabilities create opportunities to automate and assist DevOps workflows through intelligent, conversational systems.
+
+This project explores the feasibility of an LLM-powered DevOps assistant that helps engineers resolve common DevOps issues through natural language interaction.
 
 ---
 
 ## Problem Statement
-Modern DevOps environments involve complex workflows such as CI/CD pipelines, containerization, cloud deployments, and continuous monitoring. These systems generate large volumes of logs, errors, and alerts that require rapid analysis and decision-making.
+DevOps engineers face several challenges:
+- Frequent CI/CD pipeline failures
+- Complex Docker and Kubernetes configurations
+- Time-consuming debugging and troubleshooting
+- Manual and inconsistent pull request reviews
+- Outdated or missing documentation
 
-Traditional DevOps workflows rely heavily on manual troubleshooting, fragmented documentation, and repetitive operational tasks. This leads to:
-- Increased debugging time  
-- Delayed deployments  
-- Higher operational overhead  
-- Reduced developer productivity  
-
-There is a strong need for an intelligent, context-aware assistant that can understand DevOps-related queries in natural language and provide actionable insights quickly and accurately.
+Traditional DevOps tools require manual configuration and deep domain knowledge, which increases operational overhead and slows down development cycles. There is a need for an intelligent system that can understand developer intent and provide contextual, accurate DevOps guidance efficiently.
 
 ---
 
 ## Solution Description
-The **LLM-Based Intelligent Assistant for DevOps Productivity Enhancement** addresses these challenges by integrating a Large Language Model (LLM) into a DevOps support workflow.
+The **LLM-Based Intelligent Assistant for DevOps Productivity Enhancement** addresses these challenges by leveraging a Large Language Model to act as an expert DevOps assistant.
 
-The assistant allows users to ask DevOps-related questions in natural language and receive clear, practical responses. It uses prompt engineering to guide the LLM to behave as an expert DevOps assistant and provide step-by-step guidance for common issues related to CI/CD, Docker, Kubernetes, and cloud infrastructure.
+The system allows users to ask DevOps-related questions in natural language. Using structured prompt engineering, the assistant generates concise, practical responses related to CI/CD pipelines, Docker, Kubernetes, and cloud deployment best practices.
 
-This project is designed as an MVP/POC to demonstrate feasibility and extensibility toward advanced features such as agents, retrieval-augmented generation (RAG), guardrails, and evaluation mechanisms.
+The current implementation is an MVP/POC that validates the core concept and is designed to be extensible toward advanced features such as agents, Retrieval-Augmented Generation (RAG), validation engines, and GitHub automation.
 
 ---
 
 ## MVP / POC Scope
-This project focuses on delivering a **working MVP**, not a full-scale production system.
+This project is implemented as a **Proof of Concept (POC)** with the following objectives:
+- Demonstrate feasibility of LLM-based DevOps assistance
+- Validate prompt engineering for DevOps queries
+- Provide end-to-end execution through a working application
+- Focus on clarity and functionality rather than UI complexity
 
-### MVP Capabilities:
+### MVP Capabilities
 - Accepts natural language DevOps queries
 - Uses prompt engineering for domain-specific responses
-- Generates actionable DevOps guidance
-- CLI-based interaction (UI not mandatory)
+- Provides actionable DevOps troubleshooting guidance
+- CLI-based interaction
 - Includes fallback handling for API quota limitations
-
-This MVP successfully demonstrates how LLMs can enhance DevOps productivity.
 
 ---
 
-## Architecture & Workflow
-1. User enters a DevOps-related query via CLI  
-2. The query is embedded into a structured DevOps prompt  
-3. The LLM processes the prompt and generates a response  
-4. The response is displayed back to the user  
-5. If API limits are reached, a fallback mock response is returned to maintain POC continuity  
+## System Architecture (MVP Level)
+The MVP follows a simplified pipeline-based architecture:
+
+1. User enters a DevOps-related query
+2. Query is embedded into a structured DevOps prompt
+3. LLM processes the prompt
+4. Response is returned to the user
+5. Fallback response is used when API limits are reached
+
+This architecture aligns with the multi-stage workflow described in the reference document :contentReference[oaicite:1]{index=1}.
 
 ---
 
 ## Prompt Engineering
-The system uses a role-based prompt to guide the LLM:
+Prompt engineering plays a critical role in ensuring reliable output. The system uses a role-based prompt that instructs the LLM to behave as an expert DevOps engineer.
 
-- Acts as an expert DevOps assistant  
-- Provides concise and practical responses  
-- Focuses on CI/CD, Docker, Kubernetes, and cloud best practices  
-
-Proper prompt design ensures consistent and relevant output.
+Prompt characteristics:
+- Domain-restricted to DevOps topics
+- Emphasizes practical, step-by-step guidance
+- Avoids unnecessary verbosity
+- Ensures clarity and relevance
 
 ---
 
-## Guardrails & Reliability (High-Scoring Section)
-Basic guardrails are implemented to improve reliability:
-- Input handling via controlled CLI interaction
-- Fallback responses when API quota limits are exceeded
-- Clear scope restriction to DevOps-related queries
+## Guardrails & Reliability
+To improve reliability and safety, the MVP includes basic guardrails:
+- Controlled CLI-based input
+- Domain restriction via prompt design
+- Graceful fallback responses when API quota limits are exceeded
 
-These guardrails demonstrate responsible and safe LLM usage.
+These guardrails demonstrate responsible LLM usage and system robustness.
 
 ---
 
 ## Tools & Technologies Used
-- Python  
-- OpenAI LLM API  
-- python-dotenv  
-- Git & GitHub  
-- CLI-based execution  
+- Python
+- OpenAI LLM API
+- python-dotenv (secure environment variable management)
+- Git & GitHub (version control and collaboration)
+- CLI-based execution
 
-AI coding tools such as **Cursor / GitHub Copilot** may be used for development support.
+AI-assisted development tools such as Cursor and GitHub Copilot were used for development support.
 
 ---
 
 ## Installation & Setup
 1. Clone the repository:
    ```bash
-   git clone <https://github.com/vivek-tolada/Team-20>
+   git clone <https://github.com/vivek-tolada/Team-20/edit/main>
