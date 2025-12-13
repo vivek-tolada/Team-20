@@ -86,4 +86,4 @@ AI coding tools such as **Cursor / GitHub Copilot** may be used for development 
 ## Installation & Setup
 1. Clone the repository:
    ```bash
-   git clone <your-forked-repo-link>
+   git clone <https://github.com/vivek-tolada/Team-20>
