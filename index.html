@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Copilot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .animate-fadeUp { animation: fadeUp 0.5s ease-out forwards; opacity: 0; }
+    .animate-shimmer { background-size: 200% 200%; animation: shimmer 3s ease infinite; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState } = React;
+    const API_BASE = "http://localhost:8000/api";
+
+    function LandingPage({ onLaunch }) {
+      return (
+        <div className="min-h-screen bg-[radial-gradient(ellipse_at_bottom_right,#1e1b4b,#020617,#0c4a6e)] flex items-center justify-center p-4 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvZz48L3N2Zz4=')] opacity-40"></div>
+          
+          <div className="max-w-4xl w-full text-center relative z-10">
+            <div className="mb-8 animate-fadeUp">
+              <h1 className="text-6xl md:text-7xl font-bold mb-4 tracking-tight text-white">
+                DevOps{" "}
+                <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 bg-clip-text text-transparent animate-shimmer">
+                  Copilot
+                </span>
+              </h1>
+              <p className="text-2xl md:text-3xl text-slate-300 font-semibold mb-6">
+                LLM-Based DevOps Productivity Assistant
+              </p>
+              <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-8">
+                Accelerate your DevOps workflow with AI-powered assistance. Generate production-ready templates, 
+                review pull requests, create comprehensive documentation, and get instant answers to your infrastructure questions.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 animate-fadeUp" style={{ animationDelay: '0.2s' }}>
+              <div className="bg-white/[0.08] backdrop-blur-sm border border-white/15 rounded-xl p-6">
+                <h3 className="text-xl font-semibold text-slate-200 mb-2">🚀 Smart Templates</h3>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  Generate production-ready CI/CD pipelines, Dockerfiles, and Kubernetes manifests tailored to your project needs.
+                </p>
+              </div>
+              <div className="bg-white/[0.08] backdrop-blur-sm border border-white/15 rounded-xl p-6">
+                <h3 className="text-xl font-semibold text-slate-200 mb-2">🔍 PR Reviewer</h3>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  Automatically analyze pull requests for security vulnerabilities, code quality issues, and best practice violations.
+                </p>
+              </div>
+              <div className="bg-white/[0.08] backdrop-blur-sm border border-white/15 rounded-xl p-6">
+                <h3 className="text-xl font-semibold text-slate-200 mb-2">📘 Docs Generator</h3>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  Create comprehensive technical documentation from your infrastructure code with automated diagrams and explanations.
+                </p>
+              </div>
+              <div className="bg-white/[0.08] backdrop-blur-sm border border-white/15 rounded-xl p-6">
+                <h3 className="text-xl font-semibold text-slate-200 mb-2">💬 Chat Assistant</h3>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  Get instant answers to DevOps questions, troubleshoot issues, and receive guidance on infrastructure best practices.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={onLaunch}
+              className="px-8 py-4 rounded-xl font-semibold text-lg text-[#020617] bg-gradient-to-br from-cyan-400 to-indigo-500 hover:translate-y-[-2px] hover:scale-[1.02] hover:shadow-[0_12px_30px_rgba(34,211,238,0.4)] transition-all animate-fadeUp"
+              style={{ animationDelay: '0.4s' }}
+            >
+              Launch Copilot
+            </button>
+
+            <div className="mt-12 flex items-center justify-center gap-8 text-sm text-slate-500 animate-fadeUp" style={{ animationDelay: '0.6s' }}>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span>Powered by LLM Engine v2.0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function Dashboard({ onBack }) {
+      const [activeTab, setActiveTab] = useState("templates");
+      const [loading, setLoading] = useState(false);
+      const [projectType, setProjectType] = useState("python");
+      const [artifact, setArtifact] = useState("dockerfile");
+      const [details, setDetails] = useState("{}");
+      const [templateOutput, setTemplateOutput] = useState("");
+      const [diff, setDiff] = useState("");
+      const [prOutput, setPrOutput] = useState("");
+      const [summary, setSummary] = useState("");
+      const [docsOutput, setDocsOutput] = useState("");
+      const [chatInput, setChatInput] = useState("");
+      const [chatOutput, setChatOutput] = useState("");
+
+      const generateTemplate = async () => {
+        setLoading(true);
+        try {
+          const res = await fetch(`${API_BASE}/generate/template`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              project_type: projectType,
+              artifact: artifact,
+              details: JSON.parse(details || "{}")
+            })
+          });
+
+          const data = await res.json();
+          setTemplateOutput(data.content);
+        } catch (err) {
+          setTemplateOutput("Backend connection error");
+        }
+        setLoading(false);
+      };
+
+
+      const reviewPR = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`${API_BASE}/review/pr`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ diff })
+        });
+
+        const data = await res.json();
+        setPrOutput(data.review);
+      } catch (err) {
+        setPrOutput("Backend connection error");
+      }
+      setLoading(false);
+    };
+
+
+      const generateDocs = async () => {
+        setLoading(true);
+        try {
+          const res = await fetch(`${API_BASE}/generate/docs`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ repo_summary: summary })
+          });
+
+          const data = await res.json();
+          setDocsOutput(data.readme);
+        } catch (err) {
+          setDocsOutput("Backend connection error");
+        }
+        setLoading(false);
+      };
+
+      const chatLLM = async () => {
+        setLoading(true);
+        try {
+          const res = await fetch(`${API_BASE}/chat`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: chatInput })
+          });
+
+          const data = await res.json();
+          setChatOutput(data.reply);
+        } catch (err) {
+          setChatOutput("Backend connection error");
+        }
+        setLoading(false);
+      };
+
+      const tabs = [
+        { id: "templates", label: "Templates", icon: "🚀" },
+        { id: "pr", label: "PR Reviewer", icon: "🔍" },
+        { id: "docs", label: "Docs Generator", icon: "📘" },
+        { id: "chat", label: "Chat Assistant", icon: "💬" },
+      ];
+
+      return (
+        <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,#0f172a,#020617)] flex items-center justify-center p-4">
+          <div className="w-full max-w-[1400px] h-[90vh] bg-white/[0.08] backdrop-blur-[22px] border border-white/15 rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.6)] grid grid-cols-1 md:grid-cols-[280px_1fr] overflow-hidden">
+            <aside className="hidden md:flex flex-col gap-8 p-7 border-r border-white/15">
+              <div className="flex items-center gap-3">
+                <button onClick={onBack} className="text-slate-400 hover:text-white transition-colors text-xl">←</button>
+                <div className="text-[1.4rem] font-bold tracking-wide text-white">
+                  DevOps <span className="bg-gradient-to-br from-cyan-400 to-indigo-500 bg-clip-text text-transparent">Copilot</span>
+                </div>
+              </div>
+              <nav className="flex flex-col gap-3">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`w-full px-4 py-3.5 text-left rounded-xl border transition-all duration-300 text-white ${
+                      activeTab === tab.id
+                        ? "bg-gradient-to-br from-cyan-400/20 to-indigo-500/20 border-cyan-400 translate-x-1"
+                        : "bg-transparent border-white/15 hover:bg-gradient-to-br hover:from-cyan-400/20 hover:to-indigo-500/20 hover:border-cyan-400 hover:translate-x-1"
+                    }`}
+                  >
+                    <span className="mr-2">{tab.icon}</span>{tab.label}
+                  </button>
+                ))}
+              </nav>
+              <div className="mt-auto p-4 rounded-xl bg-gradient-to-br from-cyan-400/10 to-indigo-500/10 border border-white/10">
+                <p className="text-xs text-slate-400 mb-2">Powered by</p>
+                <p className="text-sm font-semibold text-white">LLM Engine v2.0</p>
+              </div>
+            </aside>
+
+            <main className="flex flex-col h-full overflow-hidden">
+              <header className="px-7 py-5 border-b border-white/15 flex justify-between items-center flex-shrink-0">
+                <h1 className="text-xl md:text-2xl font-semibold text-white">LLM-Based DevOps Productivity Assistant</h1>
+                <div className="px-4 py-2 rounded-full text-sm font-semibold text-[#020617] bg-gradient-to-br from-cyan-400 to-indigo-500">
+                  {loading ? "Processing..." : "Demo Mode"}
+                </div>
+              </header>
+
+              <div className="md:hidden flex gap-2 p-4 overflow-x-auto border-b border-white/15">
+                <button onClick={onBack} className="px-4 py-2 rounded-lg text-sm bg-white/10 text-white">← Back</button>
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`px-4 py-2 rounded-lg text-sm whitespace-nowrap transition-all ${
+                      activeTab === tab.id
+                        ? "bg-gradient-to-br from-cyan-400 to-indigo-500 text-[#020617] font-semibold"
+                        : "bg-white/10 text-white"
+                    }`}
+                  >
+                    {tab.icon} {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex-1 p-7 overflow-y-auto">
+                {activeTab === "templates" && (
+                  <div className="animate-fadeUp">
+                    <h2 className="text-2xl font-semibold text-white mb-6">Generate DevOps Templates</h2>
+                    <div className="grid md:grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <label className="block mb-2 text-sm text-slate-200">Project Type</label>
+                        <select value={projectType} onChange={(e) => setProjectType(e.target.value)} className="w-full p-3 rounded-xl border border-white/15 bg-[#0b0f1a] text-white outline-none focus:border-cyan-400 transition-colors">
+                          <option value="python">Python</option>
+                          <option value="nodejs">Node.js</option>
+                          <option value="java">Java</option>
+                          <option value="go">Go</option>
+                          <option value="rust">Rust</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block mb-2 text-sm text-slate-200">Artifact</label>
+                        <select value={artifact} onChange={(e) => setArtifact(e.target.value)} className="w-full p-3 rounded-xl border border-white/15 bg-[#0b0f1a] text-white outline-none focus:border-cyan-400 transition-colors">
+                          <option value="dockerfile">Dockerfile</option>
+                          <option value="github_actions">GitHub Actions</option>
+                          <option value="k8s_deployment">K8s Deployment</option>
+                          <option value="docker_compose">Docker Compose</option>
+                          <option value="terraform">Terraform</option>
+                        </select>
+                      </div>
+                    </div>
+                    <label className="block mb-2 text-sm text-slate-200">Additional Details (JSON)</label>
+                    <textarea value={details} onChange={(e) => setDetails(e.target.value)} placeholder='{"port": 8080, "env": "production"}' className="w-full p-3 rounded-xl border border-white/15 bg-white/[0.08] text-white outline-none focus:border-cyan-400 transition-colors min-h-[100px] resize-y mb-4 font-mono text-sm" />
+                    <button onClick={generateTemplate} disabled={loading} className="px-6 py-3.5 rounded-xl font-semibold text-[#020617] bg-gradient-to-br from-cyan-400 to-indigo-500 hover:translate-y-[-2px] hover:scale-[1.04] hover:shadow-[0_12px_30px_rgba(34,211,238,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                      {loading ? "Generating..." : "Generate Template"}
+                    </button>
+                    <OutputWindow content={templateOutput} />
+                  </div>
+                )}
+
+                {activeTab === "pr" && (
+                  <div className="animate-fadeUp">
+                    <h2 className="text-2xl font-semibold text-white mb-6">AI Pull Request Reviewer</h2>
+                    <label className="block mb-2 text-sm text-slate-200">Paste PR Diff</label>
+                    <textarea value={diff} onChange={(e) => setDiff(e.target.value)} placeholder="Paste your git diff here..." className="w-full p-3 rounded-xl border border-white/15 bg-white/[0.08] text-white outline-none focus:border-cyan-400 transition-colors min-h-[180px] resize-y mb-4 font-mono text-sm" />
+                    <button onClick={reviewPR} disabled={loading || !diff.trim()} className="px-6 py-3.5 rounded-xl font-semibold text-[#020617] bg-gradient-to-br from-cyan-400 to-indigo-500 hover:translate-y-[-2px] hover:scale-[1.04] hover:shadow-[0_12px_30px_rgba(34,211,238,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                      {loading ? "Reviewing..." : "Review PR"}
+                    </button>
+                    <OutputWindow content={prOutput} />
+                  </div>
+                )}
+
+                {activeTab === "docs" && (
+                  <div className="animate-fadeUp">
+                    <h2 className="text-2xl font-semibold text-white mb-6">README Generator</h2>
+                    <label className="block mb-2 text-sm text-slate-200">Repository Summary</label>
+                    <textarea value={summary} onChange={(e) => setSummary(e.target.value)} placeholder="Describe your project: tech stack, features, purpose..." className="w-full p-3 rounded-xl border border-white/15 bg-white/[0.08] text-white outline-none focus:border-cyan-400 transition-colors min-h-[180px] resize-y mb-4" />
+                    <button onClick={generateDocs} disabled={loading || !summary.trim()} className="px-6 py-3.5 rounded-xl font-semibold text-[#020617] bg-gradient-to-br from-cyan-400 to-indigo-500 hover:translate-y-[-2px] hover:scale-[1.04] hover:shadow-[0_12px_30px_rgba(34,211,238,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                      {loading ? "Generating..." : "Generate README"}
+                    </button>
+                    <OutputWindow content={docsOutput} />
+                  </div>
+                )}
+
+                {activeTab === "chat" && (
+                  <div className="animate-fadeUp">
+                    <h2 className="text-2xl font-semibold text-white mb-6">DevOps Chat Assistant</h2>
+                    <div className="flex gap-3 mb-4">
+                      <input value={chatInput} onChange={(e) => setChatInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && !loading && chatInput.trim() && chatLLM()} placeholder="Ask about Docker, CI/CD, Kubernetes..." className="flex-1 p-3 rounded-xl border border-white/15 bg-white/[0.08] text-white outline-none focus:border-cyan-400 transition-colors" />
+                      <button onClick={chatLLM} disabled={loading || !chatInput.trim()} className="px-6 py-3 rounded-xl font-semibold text-[#020617] bg-gradient-to-br from-cyan-400 to-indigo-500 hover:translate-y-[-2px] hover:scale-[1.04] hover:shadow-[0_12px_30px_rgba(34,211,238,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                        {loading ? "..." : "Ask"}
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {["How to optimize Docker images?", "Best CI/CD practices", "K8s pod debugging", "Terraform vs Pulumi"].map((q) => (
+                        <button key={q} onClick={() => setChatInput(q)} className="px-3 py-1.5 text-xs rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition-colors">{q}</button>
+                      ))}
+                    </div>
+                    <OutputWindow content={chatOutput} />
+                  </div>
+                )}
+              </div>
+            </main>
+          </div>
+        </div>
+      );
+    }
+
+    function OutputWindow({ content }) {
+      if (!content) return null;
+      return (
+        <div className="mt-5 h-[280px] w-full bg-[#020617] rounded-xl border border-white/15 overflow-auto">
+          <pre className="p-4 text-[0.85rem] text-gray-200 font-mono whitespace-pre min-w-[800px]">{content}</pre>
+        </div>
+      );
+    }
+
+    function App() {
+      const [page, setPage] = useState("landing");
+      if (page === "landing") return <LandingPage onLaunch={() => setPage("dashboard")} />;
+      return <Dashboard onBack={() => setPage("landing")} />;
+    }
+
+    ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+  </script>
+</body>
+</html>
