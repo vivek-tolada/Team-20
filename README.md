@@ -89,7 +89,7 @@ These guardrails demonstrate responsible LLM usage and system robustness.
 
 ## Tools & Technologies Used
 - Python
-- OpenAI LLM API
+- GROQ LLM API
 - python-dotenv (secure environment variable management)
 - Git & GitHub (version control and collaboration)
 - CLI-based execution
